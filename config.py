@@ -4,3 +4,4 @@ from dataclasses import dataclass
 class Config:
   sample_rate: int = 16000
   folder_name: str = "data"
+  team_name: str = 'voyager'
