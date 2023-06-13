@@ -8,7 +8,7 @@ from module.get_data import get_test_data
 from module.write_prediction import write_predictions
 from config import Config
 
-def test():
+def test(show_roc=False):
   try:
     # 만든 model로 test
     test_data_feature, test_data_label = get_test_data()
@@ -30,8 +30,7 @@ def test():
   fpr, tpr, _ = roc_curve(test_data_label, y_scores)
   fpr, tpr, _ = roc_curve(test_data_label, y_scores)
   
-  show_roc = input("\nROC 곡선을 보시겠습니까? (y/n): ")
-  if show_roc == 'y':
+  if show_roc:
     # ROC 곡선 그리기
     plt.plot(fpr, tpr)
     plt.xlabel('False Positive Rate')
