@@ -163,3 +163,4 @@ cython_debug/
 /data
 /.vscode
 /202301ml_fmcc/voyager_test_results.txt
+saved_model
