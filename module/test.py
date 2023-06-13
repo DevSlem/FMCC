@@ -13,13 +13,13 @@ def test(show_roc=False):
     # 만든 model로 test
     test_data_feature, test_data_label = get_test_data()
     with open('saved_model', 'rb') as f:
-      mod = pickle.load(f)
-      mod = mod['model']
+      model_dict = pickle.load(f)
+      mod = model_dict['model']
+      scaler = model_dict['scaler']
   except:
     raise('model이 없습니다. train을 먼저 해주세요')
-  
-  scaler = StandardScaler()
-  test_x_feature = scaler.fit_transform(test_data_feature)
+    
+  test_x_feature = scaler.transform(test_data_feature)
   test_accuracy = accuracy_score(mod.predict(test_x_feature), test_data_label)
   print(f'test_accuracy: {test_accuracy}')
       
