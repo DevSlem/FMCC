@@ -8,13 +8,13 @@ def train():
   train_data_feature, train_data_label = get_train_data()
   
   scaler = StandardScaler()
-  train_x_pca = scaler.fit_transform(train_data_feature)
+  train_x_feature = scaler.fit_transform(train_data_feature)
   
   clf = SVC(kernel='rbf', probability=True)
-  clf.fit(train_x_pca, train_data_label)
+  clf.fit(train_x_feature, train_data_label)
   
   model_dict = dict(
-    # scaler=scaler,
+    scaler=scaler,
     model=clf
   )
   
