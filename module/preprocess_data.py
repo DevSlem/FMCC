@@ -27,11 +27,12 @@ def mfcc_features(y: np.ndarray, sr: int) -> np.ndarray:
     delta_mfcc  = librosa.feature.delta(mfcc)
     delta2_mfcc = librosa.feature.delta(mfcc, order=2)
     
-    mfcc_percentiles = np.percentile(mfcc, [i for i in range(0, 101, 10)], axis=1)
+    percentiles = [i for i in range(0, 101, 25)]
+    
     mfcc_fs = np.concatenate((
         np.mean(mfcc, axis=1), 
         np.std(mfcc, axis=1),
-        mfcc_percentiles.flatten(),
+        np.percentile(mfcc, percentiles, axis=1).flatten(),
         stats.skew(mfcc, axis=1), 
         stats.kurtosis(mfcc, axis=1), 
     ))
@@ -40,7 +41,7 @@ def mfcc_features(y: np.ndarray, sr: int) -> np.ndarray:
     delta_mfcc_fs = np.concatenate((
         np.mean(delta_mfcc, axis=1), 
         np.std(delta_mfcc, axis=1),
-        np.percentile(delta_mfcc, [i for i in range(0, 101, 10)], axis=1).flatten(),
+        np.percentile(delta_mfcc, percentiles, axis=1).flatten(),
         stats.skew(delta_mfcc, axis=1), 
         stats.kurtosis(delta_mfcc, axis=1), 
     ))
@@ -48,7 +49,7 @@ def mfcc_features(y: np.ndarray, sr: int) -> np.ndarray:
     delta2_mfcc_fs = np.concatenate((
         np.mean(delta2_mfcc, axis=1), 
         np.std(delta2_mfcc, axis=1),
-        np.percentile(delta2_mfcc, [i for i in range(0, 101, 10)], axis=1).flatten(),
+        np.percentile(delta2_mfcc, percentiles, axis=1).flatten(),
         stats.skew(delta2_mfcc, axis=1), 
         stats.kurtosis(delta2_mfcc, axis=1), 
     ))
@@ -79,15 +80,16 @@ def spectral_features(y: np.ndarray, sr: int) -> np.ndarray:
     """
     # spectral centroid
     spec_cent = librosa.feature.spectral_centroid(y=y, sr=sr)
-    freq_mean = np.mean(spec_cent)
-    # freq_std = np.std(audio_data)
-    freq_std = np.std(spec_cent)
-    freq_median = np.median(spec_cent)
+    spec_cent_mean = np.mean(spec_cent)
+    spec_cent_std = np.std(spec_cent)
+    # freq_median = np.median(spec_cent)
 
     # spectral contrast
     spec_cont = librosa.feature.spectral_contrast(y=y, sr=sr)
-    Q25, Q75 = np.percentile(spec_cont, [25, 75])
-    IQR = Q75 - Q25
+    spec_cont_mean = np.mean(spec_cont)
+    spec_cont_std = np.std(spec_cont)
+    spec_cont_q25, spec_cont_q75 = np.percentile(spec_cont, [25, 75])
+    spec_cont_iqr = spec_cont_q75 - spec_cont_q25
     
     # spectral entropy
     sp_ent = np.mean(spectral_entropy(y, sr))
@@ -101,28 +103,32 @@ def spectral_features(y: np.ndarray, sr: int) -> np.ndarray:
     dominant = librosa.feature.spectral_bandwidth(y=y, sr=sr)
     peakf = dominant[0].max()
     meandom = np.mean(dominant)
+    stddom = np.std(dominant)
     mindom = np.min(dominant)
     maxdom = np.max(dominant)
     dfrange = maxdom - mindom
 
-    modindx = np.mean(spec_cont)
+    # modindx = np.mean(spec_cont)
 
     return np.array([
-        freq_mean, 
-        freq_std, 
-        freq_median, 
-        Q25, 
-        Q75, 
-        IQR,
+        spec_cent_mean, 
+        spec_cent_std, 
+        spec_cont_mean,
+        spec_cont_std,
+        # freq_median, 
+        spec_cont_q25, 
+        spec_cont_q75, 
+        spec_cont_iqr,
         sp_ent, 
         sfm, 
         mode, 
         peakf,
         meandom, 
+        stddom,
         mindom, 
         maxdom, 
         dfrange, 
-        modindx
+        # modindx
     ])
     
 def audio_features(y: np.ndarray, sr: int) -> np.ndarray:
