@@ -2,6 +2,13 @@
 
 Female-Male Classification Challenge
 
+1. 학습용 코드 `module/train.py`
+2. 모델 `results/saved_model`
+3. 테스트용 코드 `module/test.py`
+4. 테스트 결과 파일 `results/voyager_test_results.txt`
+5. 실행 설명서 `README.md`
+6. 논문 형식 결과 보고서 `fmcc_report.hwp`
+
 ## Installation
 
 If you use Anaconda, create an Anaconda environment first by entering the command below (optional):
