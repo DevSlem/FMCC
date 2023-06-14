@@ -161,5 +161,4 @@ cython_debug/
 
 .DS_Store
 /.vscode
-results/voyager_test_results.txt
 /preprocessed_data
