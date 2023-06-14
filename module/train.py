@@ -10,7 +10,7 @@ def train():
   scaler = StandardScaler()
   train_x_feature = scaler.fit_transform(train_data_feature)
   
-  clf = SVC(kernel='rbf', probability=True)
+  clf = SVC(kernel='rbf')
   clf.fit(train_x_feature, train_data_label)
   
   model_dict = dict(

@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 from module.train import train
-from module.test import test
+from module.test import test, eval
 
 if __name__ == "__main__":
     # seed 고정
@@ -12,16 +12,16 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--inference", action="store_true", help="Whether to run inference mode")
-    parser.add_argument("-ir", "--inference_with_roc", action="store_true", help="Whether to run inference mode with roc curve")
-
+    parser.add_argument("-e", "--eval", action="store_true", help="Whether to run eval mode")
+    
     args = parser.parse_args()
     
     if args.inference:
         print('=========test 시작=========')
         test()
-    elif args.inference_with_roc:
+    elif args.eval:
         print('=========test 시작=========')
-        test(show_roc=True)
+        eval()
     else:
         print("=========train 시작=========")
         train()
