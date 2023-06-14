@@ -12,7 +12,7 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--inference", action="store_true", help="Whether to run inference mode")
-    parser.add_argument("-p", "--plot", action="store_true", help="Whether to plot learning curve")
+    parser.add_argument("-p", "--plot", action="store_true", help="Whether to plot")
     parser.add_argument("-e", "--eval", action="store_true", help="Whether to run eval mode")
     
     args = parser.parse_args()
