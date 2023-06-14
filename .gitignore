@@ -162,5 +162,4 @@ cython_debug/
 .DS_Store
 /data
 /.vscode
-voyager_test_results.txt
-saved_model
+results/voyager_test_results.txt

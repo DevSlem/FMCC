@@ -6,15 +6,10 @@ import logging
 from config import Config
 from module.preprocess_data import preprocess_data
 from module.get_file import get_train_file, get_test_file, get_eval_file
+from module.util import try_make_dir
 
 def get_train_data():
-  try:
-    os.mkdir(Config.folder_name)
-    logging.debug(f"{Config.folder_name} 폴더를 생성했습니다.")
-  except FileExistsError:
-    logging.debug(f"{Config.folder_name} 폴더가 이미 존재합니다.")
-  except Exception as e:
-    raise(f"알수 없는 에러 발생: {e}")
+  try_make_dir(Config.folder_name)
   
   try:
     print("csv 파일을 로드합니다.")
@@ -41,13 +36,7 @@ def get_train_data():
   return train_data_feature, train_data_label
 
 def get_eval_data():
-  try:
-    os.mkdir(Config.folder_name)
-    print(f"{Config.folder_name} 폴더를 생성했습니다.")
-  except FileExistsError:
-    print(f"{Config.folder_name} 폴더가 이미 존재합니다.")
-  except Exception as e:
-    raise(f"알수 없는 에러 발생: {e}")
+  try_make_dir(Config.folder_name)
   
   try:
     print("csv 파일을 로드합니다.")
@@ -69,13 +58,7 @@ def get_eval_data():
   return eval_data_feature
 
 def get_test_data():
-  try:
-    os.mkdir(Config.folder_name)
-    print(f"{Config.folder_name} 폴더를 생성했습니다.")
-  except FileExistsError:
-    print(f"{Config.folder_name} 폴더가 이미 존재합니다.")
-  except Exception as e:
-    raise(f"알수 없는 에러 발생: {e}")
+  try_make_dir(Config.folder_name)
   
   try:
     print("csv 파일을 로드합니다.")
