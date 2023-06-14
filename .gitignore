@@ -162,5 +162,5 @@ cython_debug/
 .DS_Store
 /data
 /.vscode
-/202301ml_fmcc/voyager_test_results.txt
+voyager_test_results.txt
 saved_model
